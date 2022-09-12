@@ -5,3 +5,9 @@ tasks:
     cmds:
       - symfony composer install
       - symfony server:start -d
+  stop:
+    cmds:
+      - symfony server:stop
+
+  restart:
+    deps: [stop, start]
