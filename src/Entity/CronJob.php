@@ -6,6 +6,7 @@ use App\Repository\CronJobRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CronJobRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class CronJob
 {
     #[ORM\Id]
@@ -76,5 +77,17 @@ class CronJob
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function onPrePersist(): void
+    {
+        $this->createdAt = new \DateTimeImmutable('now');
+    }
+
+    #[ORM\PreUpdate]
+    public function onPreUpdate(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable('now');
     }
 }
