@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\CronJobRepository;
+use Cron\CronExpression;
 use Doctrine\ORM\Mapping as ORM;
+use App\Shared\Doctrine\DBAL\Types\CronExpressionType;
 
 #[ORM\Entity(repositoryClass: CronJobRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -17,8 +19,8 @@ class CronJob
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $expression = null;
+    #[ORM\Column(type: CronExpressionType::CRON_EXPRESSION_TYPE)]
+    private CronExpression $expression;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -43,12 +45,12 @@ class CronJob
         return $this;
     }
 
-    public function getExpression(): ?string
+    public function getExpression(): CronExpression
     {
         return $this->expression;
     }
 
-    public function setExpression(string $expression): self
+    public function setExpression(CronExpression $expression): self
     {
         $this->expression = $expression;
 

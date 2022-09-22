@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\CronJob;
+use App\Shared\EasyAdmin\Field\CronExpressionField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -18,7 +19,7 @@ final class CronJobCrudController extends AbstractCrudController
     {
         return [
             TextField::new('name'),
-            TextField::new('expression'),
+            CronExpressionField::new('expression'),
             DateTimeField::new('createdAt')->onlyOnIndex(),
             DateTimeField::new('updatedAt')->onlyOnIndex(),
         ];
